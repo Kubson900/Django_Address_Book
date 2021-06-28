@@ -1,0 +1,15 @@
+{% extends 'address_book/base.html'%}}
+{% block content %}
+    {% for contact in contacts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ contact.name }} {{ contact.surname }}</a>
+              <small class="text-muted">{{ contact.date_of_modification|date:'F d, Y' }}</small>
+            </div>
+            <small class="text-muted">{{ contact.email }}</small>
+            <small class="text-muted">{{ contact.address }}</small>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

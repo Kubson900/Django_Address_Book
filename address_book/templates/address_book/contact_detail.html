@@ -1,0 +1,13 @@
+{% extends 'address_book/base.html' %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ object.name }} {{ object.surname }}</a>
+          <small class="text-muted">{{ object.date_of_modification|date:'F d, Y' }}</small>
+        </div>
+        <small class="text-muted">{{ object.email }}</small>
+        <small class="text-muted">{{ object.address }}</small>
+      </div>
+    </article>
+{% endblock content %}
