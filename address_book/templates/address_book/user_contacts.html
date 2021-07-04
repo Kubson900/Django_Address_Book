@@ -9,7 +9,14 @@
               <small class="text-muted">{{ contact.date_of_modification|date:'F d, Y' }}</small>
             </div>
             <small class="text-muted">{{ contact.email }}</small>
-            <small class="text-muted">{{ contact.address }}</small>
+            <small class="text-muted">{{ contact.voivodeship }}</small>
+            <small class="text-muted">{{ contact.zip_code }}</small>
+            <small class="text-muted">{{ contact.city }}</small>
+            <small class="text-muted">{{ contact.street }}</small>
+            <small class="text-muted">{{ contact.number1 }}</small>
+            {% if contact.number2 %}
+            <small class="text-muted">/ {{ contact.number2 }}</small>
+            {% endif %}
           </div>
         </article>
     {% endfor %}

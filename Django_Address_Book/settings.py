@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'localflavor',
     'address_book.apps.AddressBookConfig',
     'users.apps.UsersConfig',
     'crispy_forms',

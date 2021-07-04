@@ -29,7 +29,7 @@ class ContactDetailView(DetailView):
 
 class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
-    fields = ['name', 'surname', 'email', 'address']
+    fields = ['name', 'surname', 'email', 'zip_code', 'city', 'street', 'number1', 'number2']
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

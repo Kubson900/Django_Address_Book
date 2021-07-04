@@ -7,7 +7,15 @@
           <small class="text-muted">{{ object.date_of_modification|date:'F d, Y' }}</small>
         </div>
         <small class="text-muted">{{ object.email }}</small>
-        <small class="text-muted">{{ object.address }}</small>
+        <small class="text-muted">{{ object.voivodeship }}</small>
+        <small class="text-muted">{{ object.zip_code }}</small>
+        <small class="text-muted">{{ object.city }}</small>
+        <small class="text-muted">{{ object.street }}</small>
+        <small class="text-muted">{{ object.number1 }}</small>
+        {% if object.number2 %}
+            <small class="text-muted">/ {{ object.number2 }}</small>
+        {% endif %}
+
       </div>
     </article>
 {% endblock content %}
