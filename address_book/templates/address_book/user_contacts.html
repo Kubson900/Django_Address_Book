@@ -1,22 +1,19 @@
 {% extends 'address_book/base.html'%}}
 {% block content %}
     <h1 class="mb-3">Contacts of {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle mb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sorting
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="#">Name</a>
+      <a class="dropdown-item" href="#">Surname</a>
+      <a class="dropdown-item" href="#">Date of Modification</a>
+    </div>
     {% for contact in contacts %}
         <article class="media content-section">
           <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ contact.name }} {{ contact.surname }}</a>
+              <a class="mr-2" href="{% url 'contact-detail' contact.id%}">{{ contact.name }} {{ contact.surname }}</a>
               <small class="text-muted">{{ contact.date_of_modification|date:'F d, Y' }}</small>
-            </div>
-            <small class="text-muted">{{ contact.email }}</small>
-            <small class="text-muted">{{ contact.voivodeship }}</small>
-            <small class="text-muted">{{ contact.zip_code }}</small>
-            <small class="text-muted">{{ contact.city }}</small>
-            <small class="text-muted">{{ contact.street }}</small>
-            <small class="text-muted">{{ contact.number1 }}</small>
-            {% if contact.number2 %}
-            <small class="text-muted">/ {{ contact.number2 }}</small>
-            {% endif %}
           </div>
         </article>
     {% endfor %}

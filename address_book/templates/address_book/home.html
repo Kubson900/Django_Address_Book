@@ -1,22 +1,30 @@
 {% extends 'address_book/base.html'%}}
 {% block content %}
-    {% for contact in contacts %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ contact.name }} {{ contact.surname }}</a>
-              <small class="text-muted">{{ contact.date_of_modification|date:'F d, Y' }}</small>
-            </div>
-            <small class="text-muted">{{ contact.email }}</small>
-            <small class="text-muted">{{ contact.voivodeship }}</small>
-            <small class="text-muted">{{ contact.zip_code }}</small>
-            <small class="text-muted">{{ contact.city }}</small>
-            <small class="text-muted">{{ contact.street }}</small>
-            <small class="text-muted">{{ contact.number1 }}</small>
-            {% if contact.number2 %}
-            <small class="text-muted">/ {{ contact.number2 }}</small>
-        {% endif %}
-          </div>
-        </article>
-    {% endfor %}
+    {% if user.is_authenticated %}
+        {% for contact in contacts %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="{% url 'contact-detail' contact.id%}">{{ contact.name }} {{ contact.surname }}</a>
+                  <small class="text-muted">{{ contact.date_of_modification|date:'F d, Y' }}</small>
+                </div>
+                <div>
+                    <small class="text-muted">{{ contact.email }}</small>
+                </div>
+                <div>
+                    <small class="text-muted">{{ contact.zip_code }}</small>
+                    <small class="text-muted">{{ contact.city }}</small>
+                </div>
+                <small class="text-muted">{{ contact.street }}</small>
+                <small class="text-muted">{{ contact.number1 }}</small>
+                {% if contact.number2 %}
+                <small class="text-muted">/ {{ contact.number2 }}</small>
+                {% endif %}
+              </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <h3>Welcome to Address Book</h3>
+        <h4>Please Log In</h4>
+    {% endif %}
 {% endblock content %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Contact
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
 
@@ -20,7 +20,7 @@ class ContactListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Contact.objects.filter(owner=user).order_by('name')
+        return Contact.objects.filter(owner=user).order_by(self.ordering)
 
 
 class ContactDetailView(DetailView):
@@ -34,3 +34,29 @@ class ContactCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+
+class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Contact
+    fields = ['name', 'surname', 'email', 'zip_code', 'city', 'street', 'number1', 'number2']
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        contact = self.get_object()
+        if self.request.user == contact.owner:
+            return True
+        return False
+
+
+class ContactDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Contact
+    success_url = '/'
+
+    def test_func(self):
+        contact = self.get_object()
+        if self.request.user == contact.owner:
+            return True
+        return False
