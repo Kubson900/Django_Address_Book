@@ -16,11 +16,16 @@ class ContactListView(ListView):
     model = Contact
     template_name = 'address_book/user_contacts.html'
     context_object_name = 'contacts'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Contact.objects.filter(owner=user).order_by(self.ordering)
+        if self.request.method == 'GET':
+            user = get_object_or_404(User, username=self.kwargs.get('username'))
+            user_contacts = Contact.objects.filter(owner=user)
+            sorting_method = self.request.GET.get('sort_by', None)
+            if sorting_method is not None:
+                user_contacts = user_contacts.order_by(sorting_method)
+            return user_contacts
 
 
 class ContactDetailView(DetailView):

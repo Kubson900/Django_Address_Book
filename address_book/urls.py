@@ -18,7 +18,7 @@ from .views import (
 
 urlpatterns = [
     path('', home, name='address_book-home'),
-    path('user/<str:username>', ContactListView.as_view(ordering='name'), name='user-contacts'),
+    path('user/<str:username>', ContactListView.as_view(), name='user-contacts'),
     path('contact/<int:pk>/', ContactDetailView.as_view(), name='contact-detail'),
     path('contact/new', ContactCreateView.as_view(), name='contact-create'),
     path('contact/<int:pk>/update/', ContactUpdateView.as_view(), name='contact-update'),
