@@ -13,7 +13,7 @@ class Contact(models.Model):
     number1 = models.IntegerField(default=0)
     number2 = models.IntegerField(blank=True, null=True)
     date_of_modification = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='contacts', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name + ' ' + self.surname
