@@ -1,10 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'contacts', views.ContactViewSet)
+router.register(r'users', views.UserViewSet)
+
+# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', views.api_root),
-    path('contacts', views.ContactList.as_view(), name='contact-list'),
-    path('contacts/<int:pk>', views.ContactDetail.as_view(), name='contact-detail'),
-    path('users', views.UserList.as_view(), name='user-list'),
-    path('users/<int:pk>', views.UserDetail.as_view(), name='user-detail')
+    path('', include(router.urls)),
 ]
