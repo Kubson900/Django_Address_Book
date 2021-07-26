@@ -3,20 +3,19 @@ version: "3.9"
 services:
   db:
     image: postgres
-    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=address_book
-      - POSTGRES_USER=address_book
-      - POSTGRES_PASSWORD=address_book123
-    ports:
-    - "5432:5432"
-
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
-    - "8000:8000"
+      - "8000:8000"
     depends_on:
       - db
