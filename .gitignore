@@ -153,6 +153,7 @@ fabric.properties
 
 # PostgreSQL
 # Global excludes across all subdirectories
+/data
 *.o
 *.obj
 *.bc
