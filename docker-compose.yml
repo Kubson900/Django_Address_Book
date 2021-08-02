@@ -17,16 +17,32 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    environment:
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
       - db
-      - rabbitmq
+      - redis
+      #- rabbitmq
 
-  rabbitmq:
-    image: rabbitmq:3.9.1-management
-    container_name: 'rabbitmq'
-    ports:
-      - 5672:5672
-      - 15672:15672
+  celery:
+    build: .
+    command: celery -A Django_Address_Book worker -l INFO
     volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    - .:/app
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis
+
+  #rabbitmq:
+    #image: rabbitmq:management
+    #container_name: 'rabbitmq'
+    #ports:
+      #- 5672:5672
+      #- 15672:15672
+    #volumes:
+      #- ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      #- ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
