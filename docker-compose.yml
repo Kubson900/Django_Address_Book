@@ -10,6 +10,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
+  redis:
+    image: redis
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -24,11 +27,10 @@ services:
   celery:
     build: .
     command: celery -A Django_Address_Book worker -l INFO
+    restart: always
     volumes:
     - .:/app
     depends_on:
       - web
       - redis
-
-  redis:
-    image: redis
+      - db
