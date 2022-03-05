@@ -1,0 +1,29 @@
+{% extends 'address_book/base.html' %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'contact-detail' object.id%}">{{ object.name }} {{ object.surname }}</a>
+          <small class="text-muted">{{ object.date_of_modification|date:'F d, Y' }}</small>
+        </div>
+        <div>
+            <small class="text-muted">{{ object.email }}</small>
+        </div>
+        <div>
+            <small class="text-muted">{{ object.zip_code }}</small>
+            <small class="text-muted">{{ object.city }}</small>
+        </div>
+        <small class="text-muted">{{ object.street }}</small>
+        <small class="text-muted">{{ object.number1 }}</small>
+        {% if contact.number2 %}
+        <small class="text-muted">/ {{ object.number2 }}</small>
+        {% endif %}
+        {% if object.owner == user %}
+            <div>
+                <a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'contact-update' object.id %}">Update</a>
+                <a class='btn btn-danger btn-sm mt-1 mb-1' href="{% url 'contact-delete' object.id %}">Delete</a>
+            </div>
+        {% endif %}
+      </div>
+    </article>
+{% endblock content %}
